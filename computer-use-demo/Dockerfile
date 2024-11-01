@@ -49,8 +49,13 @@ RUN apt-get update && \
     tint2 \
     galculator \
     pcmanfm \
-    unzip && \
-    apt-get clean
+    unzip \
+    # Make automation stuff
+    scrot \
+    python3-tk \
+    python3-dev 
+# RUN gnome-screenshot
+RUN apt-get clean
 
 # Install noVNC
 RUN git clone --branch v1.5.0 https://github.com/novnc/noVNC.git /opt/noVNC && \
@@ -90,6 +95,15 @@ RUN python -m pip install --upgrade pip==23.1.2 setuptools==58.0.4 wheel==0.40.0
 # only reinstall if requirements.txt changes
 COPY --chown=$USERNAME:$USERNAME computer_use_demo/requirements.txt $HOME/computer_use_demo/requirements.txt
 RUN python -m pip install -r $HOME/computer_use_demo/requirements.txt
+
+# now add the PyAutoGuiControl and install the python moduls needed
+# COPY --chown=$USERNAME:$USERNAME PyAutoGUIControl/ $HOME/PyAutoGUIControl/
+# RUN python -m pip install -r $HOME/computer_use_demo/PyAutoGUIControl/requirements.txt
+
+# create the /tmp/.X11-unix directory for PyAutoGUI
+RUN mkdir -p /tmp/.X11-unix && \
+    chmod 1777 /tmp/.X11-unix && \
+    touch $HOME/.Xauthority
 
 # setup desktop env & app
 COPY --chown=$USERNAME:$USERNAME image/ $HOME

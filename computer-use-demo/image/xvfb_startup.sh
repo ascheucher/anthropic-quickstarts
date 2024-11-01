@@ -34,7 +34,8 @@ if check_xvfb_running; then
 fi
 
 # Start Xvfb
-Xvfb $DISPLAY -ac -screen 0 $RES_AND_DEPTH -retro -dpi $DPI -nolisten tcp -nolisten unix &
+#Xvfb $DISPLAY -ac -screen 0 $RES_AND_DEPTH -retro -dpi $DPI -nolisten tcp -nolisten unix &
+Xvfb $DISPLAY -ac -screen 0 $RES_AND_DEPTH -retro -dpi $DPI -nolisten tcp &
 XVFB_PID=$!
 
 # Wait for Xvfb to start
